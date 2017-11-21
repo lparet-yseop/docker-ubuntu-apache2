@@ -1,0 +1,11 @@
+version: '2'
+
+services:
+  ubuntu-apache2:
+    image: lparet/docker-ubuntu-apache2
+    container_name: ubuntu-apache2
+    restart: always
+    volumes:
+      - /path/to/your/project:/var/www/html:rw
+    ports:
+      - 80:80

@@ -1,0 +1,96 @@
+= Docker container with Apache2
+
+This repository contains configurations to create a Docker container with:
+
+* *Ubuntu* 16.04
+* *Apache2*
+* *Supervisor* to manage processus
+
+== Getting Started
+
+=== Prerequisites
+
+You have to install *Docker* and *Docker Compose* (optional) to build and run this container.
+
+=== Pull container
+
+You can download this container from *DockerHub* by launching this command :
+
+[source,bash]
+----
+docker pull lparet/docker-ubuntu-apache2
+----
+
+It will download the latest version.
+
+=== Run container
+
+==== Prerequisites
+
+Firstly, you have to plug a PHP project. To do that, you need to create a *data volume* between host and docker container:
+
+- Pull your project in a directory on your host.
+- Copy it path in *docker-compose.yml* and edit */path/to/your/project*
+
+.docker-compose.yml
+----
+services:
+  docker-ubuntu-apache2:
+    image: lparet/docker-ubuntu-apache2
+    container_name: ubuntu-apache2
+    restart: always
+    volumes:
+      - /path/to/your/project:/var/www/html:rw
+    ports:
+      - 80:80
+----
+
+After, you can change:
+- The port used by the container.
+- The container name.
+
+==== Running
+
+You can use *docker-compose.yml*:
+
+[source,bash]
+----
+docker-compose up -d
+----
+
+It will run your container with parameters specified in the file.
+
+OR
+
+You can use *docker run* command:
+
+[source,bash]
+----
+docker run -it --name ubuntu-apache2 -v /path/to/my/project:/var/www/html -p 80:80 lparet/docker-ubuntu-apache2
+----
+
+=== Test your project
+
+Open in your browser this URL http://localhost:80
+
+OR
+
+Consult Docker container logs
+
+[source,bash]
+----
+docker logs ubuntu-apache2
+----
+
+OR
+
+Go into the Docker container
+
+[source,bash]
+----
+docker exec -it ubuntu-apache2 bash
+----
+
+== Author
+
+Louis Paret - perso@louisparet.fr
